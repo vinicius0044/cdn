@@ -18,6 +18,127 @@
         '</div>'), $('#delimitadorBarra').after($('.menu.superior'));
     }
 
+    instagramRodape = function() {
+        if ("undefined" != typeof configInstagram) {
+            var a = configInstagram.user,
+            t = "<div id='instagram' class='line'><h2><span>" + configInstagram.title + "</span><a href='https://instagram.com/" + a + "' target='blank'>@" + a + "</a></h2><ul></ul></div>";
+            $(window).load(function() {
+                if ($("#corpo .secao-secundaria").append($(t)), $("#instagram").length) {
+                    var a = $("#instagram ul"),
+                    o = configInstagram.token,
+                    n = configInstagram.userid;
+                    $.ajax({
+                        url: "https://api.instagram.com/v1/users/" + n + "/media/recent",
+                        dataType: "jsonp",
+                        type: "GET",
+                        data: {
+                            access_token: o,
+                            count: 5
+                        },
+                        success: function(t) {
+                            for (var o = 0; o < t.data.length; o++) a.append('<li><a href="' + t.data[o].link + '" target="_blank"><img src="' + t.data[o].images.standard_resolution.url + '" width="250" height="250" /></li>')
+                        },
+                    error: function(a) {
+                        $("#instagram").hide(), console.log(a)
+                    }
+                })
+                }
+            })
+        }
+    }
+    copyright = function() {
+        $('#rodape > div:last-child .row-fluid div:last-child a').addClass('loja-integrada-copyright'), $('#rodape > div:last-child .row-fluid > div:nth-child(2)').before('<div class="design-fox"><a target="_blank" href="https://integrando.se/parceiros/foxtech-agncia-digital-para-e-commerce/"><img src="//cdn.awsli.com.br/585/585444/arquivos/new-brand-footer.png"></a></div>'), $('#rodape > div:last-child .row-fluid > div:nth-child(2)').before($('.loja-integrada-copyright')), $('a.loja-integrada-copyright').html('<img src="https://cdn.awsli.com.br/267/267860/arquivos/logo-lojaintegrada.png">'), $('#rodape .institucional .conteiner .row-fluid').find('.span9').addClass('span12').removeClass('span9'), $('#rodape .links-rodape.links-rodape-categorias').addClass('span3').removeClass('span4'), $('.span4.links-rodape.links-rodape-paginas').addClass('span2').removeClass('span4'), $('#rodape .pagamento').addClass('span8').removeClass('span4'), $('#rodape .selos').addClass('span4').removeClass('span4'), $("#rodape .span2:nth-child(2) .titulo").html("Institucional"), $("#rodape .span4.pagamento .titulo").html("Pague com"), $("#rodape .span4.selos .titulo").html("SeguranÃ§a"), $("#rodape .contato .titulo").html("Central de ajuda"), $('#rodape .span4:nth-child(2)').addClass('span3').removeClass('span4'),$("#rodape > div:last-child").addClass("assinatura-rodape");
+    }
+    newRodape = function() {
+        $('#rodape .institucional .conteiner .row-fluid').find('.span9').addClass('span12').removeClass('span9')
+        $('#rodape .links-rodape.links-rodape-categorias').addClass('span3').removeClass('span4')
+        $('.span4.links-rodape.links-rodape-paginas').addClass('span3').removeClass('span4')
+        $('#rodape .pagamento').addClass('span8').removeClass('span4')
+        $('#rodape .selos').addClass('span4').removeClass('span4')
+        $('#rodape  .span4:nth-child(3)').remove()
+        $("#rodape .span4.contato .titulo").html("Central de ajuda")
+        $('#rodape .institucional .row-fluid .row-fluid div:last-child').removeClass('span12').addClass('span4 contato').removeClass('visible-phone');
+        var $elementoTelefone = $('#rodape .institucional li .icon-phone').parents('a');
+        var $elementoWhatsapp = $('#rodape .institucional li .fa-whatsapp').parents('a');
+        var $elementoSkype = $('#rodape .institucional li .fa-skype').parents('a');
+        var $elementoEmail = $('#rodape .institucional li .fa-envelope').parents('a');
+        if ($elementoTelefone.length) {
+            $elementoTelefone.html($elementoTelefone.html().replace('Telefone:', ''));
+        }
+        if ($elementoWhatsapp.length) {
+            $elementoWhatsapp.html($elementoWhatsapp.html().replace('Whatsapp:', ''));
+        }
+        if ($elementoSkype.length) {
+            $elementoSkype.html($elementoSkype.html().replace('Skype:', ''));
+        }
+        if ($elementoSkype.length) {
+            $elementoEmail.html($elementoEmail.html().replace('E-mail:', ''));
+        }
+        $('.sobre-loja-rodape').after($('.span4.links-rodape.links-rodape-paginas'));
+        $('#rodape .contato').after(
+            '<div class="news-rodape span3">' +
+            '<div class="newsletter">' +
+            '<span class="titulo cor-secundaria">' +
+            'Newsletter' +
+            '</span>' +
+            '<p class="texto-newsletter newsletter-cadastro">Assine nossa newsletter e fique por dentro de todas novidades, lanÃ§amentos, promoÃ§Ãµes e muito mais.</p>' +
+            '<div class="interno-conteudo">' +
+            '<div class="newsletter-cadastro input-conteiner">' +
+            '<input type="text" placeholder="DIGITE SEU EMAIL" name="email">' +
+            '<button data-action="/newsletter/assinar/" class="botao botao-input fundo-principal newsletter-assinar">CADASTRAR</button>' +
+            '</div>' +
+            '<div class="newsletter-confirmacao hide">' +
+            '<i class="icon-ok icon-3x"></i>' +
+            '<span>Seu cadastro foi realizado com sucesso em nossa newsletter.</span>' +
+            '</div>' +
+            '</div>' +
+            '</div>');
+        $(".news-rodape").append($('.redes-sociais'));
+        $('#rodape .contato').append(
+            '<li class="complement">' +
+            '<li class="operation" id="operation""><strong>HorÃ¡rio de Funcionamento:</strong><p>Seg a Sex de 08h Ã s 18h<br>SÃ¡bado de 08h Ã s 14h<p></li>' +
+            '<a class="atd-rodape" id="atd-rodape" href="#modalContato" data-toggle="modal" data-target="#modalContato">Fale conosco</a>' +
+            '</li>'
+            );
+    }
+
+    renameVitrine = function() {
+        $('.listagem .vitrine-lancamento strong').each(function() {
+            var txt;
+            txt = $(this).text().replace('LanÃ§amentos', 'Ãšltimos adicionados');
+            $(this).text(txt);
+        }),
+        $('.listagem .vitrine-mas-vendido strong').each(function() {
+            var txt;
+            txt = $(this).text().replace('Mais Vendidos', 'Selecionamos os mais vendidos');
+            $(this).text(txt);
+        }),
+        $('.listagem .vitrine-destaque strong').each(function() {
+            var txt;
+            txt = $(this).text().replace('Destaques', 'Destaques da semana');
+            $(this).text(txt);
+        })
+    }
+
+    Rastreio = function() {
+        $('body').append('<div class="modal fade hide" id="modalRastreio" aria-labelledby="meuModalLabel" aria-hidden="true" ><h3 id="meuModalLabel">Rastreamento de objetos</h3></div>');
+        $('#modalRastreio').append('<form id="formRastrearObj"><input id="rastrearObj" placeholder="Digite seu cÃ³digo de rastreio"><i class="fa fa-search" onclick="$(this).parent().submit()"></i><img src="//i.imgur.com/jH1Bc6k.gif"></form>');
+        $('#formRastrearObj').on('submit', function(e) {
+            e.preventDefault();
+            var code = $('#rastrearObj').val();
+            $('#formRastrearObj').addClass('loading');
+            $.get('https://cnweb4.websiteseguro.com/logocn-integrada/correios.php?obj=' + code, function(r) {
+                if ($(r).find('.listEvent').length) {
+                    $('#modalRastreio').html('<h3><div data-dismiss="modal"><i class="fa fa-times"></i></div> <i class="fa fa-truck"></i>' + code + '</h3><div class="modal-body"><table>' + $(r).find('.listEvent').clone().html() + '</table></div>');
+                    $('#modalRastreio').modal();
+                } else {
+                    alert('CÃ³digo invalido');
+                }
+                $('#formRastrearObj').removeClass('loading');
+            })
+        })
+    }
+
     vitrineTime = function() {
         
         $('div#listagemProdutos ul').addClass('produtos-carrosel');
